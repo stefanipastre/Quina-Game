@@ -130,6 +130,7 @@ class Board extends React.Component {
   function calculateWinner(squares, stepNumber) {
     
     if(stepNumber === 0){
+      //if it's the first play, it returns null to continue
       return null;
     }else{
       const boardSize = 19;
@@ -139,7 +140,7 @@ class Board extends React.Component {
       //horizontal
       //for P
       for(let r = 0; r < boardSize; ++r) {
-        cols = cols + 19;
+        cols = cols + boardSize;
         for(let c = 0; c < cols-4; ++c) {
             if(squares[c] === 'P' && squares[c+1] === 'P' && squares[c+2] === 'P' && squares[c+3] === 'P' && squares[c+4] === 'P'){
               return squares[c];
@@ -148,7 +149,7 @@ class Board extends React.Component {
       }
       //for B
       for(let r = 0; r < boardSize; ++r) {
-        cols = cols + 19;
+        cols = cols + boardSize;
         for(let c = 0; c < cols-4; ++c) {
             if(squares[c] === 'B' && squares[c+1] === 'B' && squares[c+2] === 'B' && squares[c+3] === 'B' && squares[c+4] === 'B'){
               return squares[c];
@@ -159,24 +160,64 @@ class Board extends React.Component {
       //vertical
       //for P
       for(let c = 0; c < boardSize; ++c) {
-        rows = c + (18*19);
-        for(let r = c; r < rows-76; r=r+19) {
-            if(squares[r] === 'P' && squares[r+19] === 'P' && squares[r+38] === 'P' && squares[r+57] === 'P' && squares[r+76] === 'P'){
+        rows = c + ((boardSize-1)*boardSize);
+        for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
+            if(squares[r] === 'P' && squares[r+boardSize] === 'P' && squares[r+(boardSize*2)] === 'P' && squares[r+(boardSize*3)] === 'P' && squares[r+(boardSize*4)] === 'P'){
               return squares[r];
             }
         }
       }
       //for B
       for(let c = 0; c < boardSize; ++c) {
-        rows = c + (18*19);
-        for(let r = c; r < rows-76; r=r+19) {
-            if(squares[r] === 'B' && squares[r+19] === 'B' && squares[r+38] === 'B' && squares[r+57] === 'B' && squares[r+76] === 'B'){
+        rows = c + ((boardSize-1)*boardSize);
+        for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
+            if(squares[r] === 'B' && squares[r+boardSize] === 'B' && squares[r+(boardSize*2)] === 'B' && squares[r+(boardSize*3)] === 'B' && squares[r+(boardSize*4)] === 'B'){
               return squares[r];
             }
         }
       }
 
+      //positive diagonal
+      //for P
+      for(let c = 0; c < boardSize-4; ++c) {
+        rows = c + ((boardSize-1)*boardSize);
+        for(let r = c; r < rows-(boardSize*4); r=r+19) {
+            if(squares[r] === 'P' && squares[r+(boardSize+1)] === 'P' && squares[r+(boardSize*2)+2] === 'P' && squares[r+(boardSize*3)+3] === 'P' && squares[r+(boardSize*4)+4] === 'P'){
+              return squares[r];
+            }
+        }
+      }
+      //for B
+      for(let c = 0; c < boardSize-4; ++c) {
+        rows = c + ((boardSize-1)*boardSize);
+        for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
+            if(squares[r] === 'B' && squares[r+(boardSize+1)] === 'B' && squares[r+(boardSize*2)+2] === 'B' && squares[r+(boardSize*3)+3] === 'B' && squares[r+(boardSize*4)+4] === 'B'){
+              return squares[r];
+            }
+        }
+      }
 
+      //negative diagonal
+      //for P
+      for(let c = 4; c < boardSize; ++c) {
+        rows = c + ((boardSize-1)*boardSize);
+        for(let r = c+(boardSize*3); r < rows; r=r+boardSize) {
+            if(squares[r] === 'P' && squares[r+(boardSize-1)] === 'P' && squares[r+(boardSize*2)-2] === 'P' && squares[r+(boardSize*3)-3] === 'P' && squares[r+(boardSize*4)-4] === 'P'){
+              return squares[r];
+            }
+        }
+      }
+      //for B
+      for(let c = 4; c < boardSize; ++c) {
+        rows = c + ((boardSize-1)*boardSize);
+        for(let r = c+(boardSize*3); r < rows; r=r+boardSize) {
+            if(squares[r] === 'B' && squares[r+(boardSize-1)] === 'B' && squares[r+(boardSize*2)-2] === 'B' && squares[r+(boardSize*3)-3] === 'B' && squares[r+(boardSize*4)-4] === 'B'){
+              return squares[r];
+            }
+        }
+      }
+
+      //continue game
       return null;
     }
 
