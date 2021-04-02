@@ -1,0 +1,7 @@
+.containerWhite{
+    width: 16px;
+    height: 16px;
+    border:1px solid #000;
+    background-color: #fff;
+    border-radius: 50%;
+}

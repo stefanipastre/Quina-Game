@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import BlackBall from './components/Balls/BlackBall/BlackBall';
+import WhiteBall from './components/Balls/WhiteBall/WhiteBall';
+import Score from './components/Score/Score'
+import Title from './components/Title/Title'
 
 
 function Square(props){
@@ -38,10 +42,6 @@ class Board extends React.Component {
       squares.push(<div key={r} className="board-row">{row}</div>);
 
     }
-    console.log(squares[0]);
-    // for(let a = 0; a < boardSize; ++a) {
-    //   console.log(this.props.squares);
-    // }
 
       return (
         <div>{squares}</div>
@@ -69,7 +69,7 @@ class Board extends React.Component {
       if (calculateWinner(squares, this.state.stepNumber) || squares[i]){
           return;
       }
-      squares[i] = this.state.xIsNext  ? 'P' : 'B';
+      squares[i] = this.state.xIsNext  ? <BlackBall /> : <WhiteBall />;
       this.setState({
           history: history.concat([{
             squares: squares,
@@ -107,22 +107,23 @@ class Board extends React.Component {
       if(winner) {
         status = 'Winner: ' + winner;
       }else{
-        status = 'Next player: '+ (this.state.xIsNext  ? 'P' : 'B');
+        status = (this.state.xIsNext  ? 'Black' : 'White');
       }
 
       return (
+        <>
+        <Title title="ESTUDANTE VS TRABALHOS"/>
         <div className="game">
+          <Score player="white" points="04" captures="05" pieces="06" status={status}/>
           <div className="game-board">
             <Board
               squares={current.squares}
               onClick={(i) => this.handleClick(i)} 
             />
           </div>
-          <div className="game-info">
-            <div>{status}</div>
-            <ol>{moves}</ol>
-          </div>
+            <Score player="black" points="01" captures="02" pieces="03" status={status}/>
         </div>
+        </>
       );
     }
   }
@@ -142,7 +143,7 @@ class Board extends React.Component {
       for(let r = 0; r < boardSize; ++r) {
         cols = cols + boardSize;
         for(let c = 0; c < cols-4; ++c) {
-            if(squares[c] === 'P' && squares[c+1] === 'P' && squares[c+2] === 'P' && squares[c+3] === 'P' && squares[c+4] === 'P'){
+            if(squares[c] === <BlackBall /> && squares[c+1] === <BlackBall /> && squares[c+2] === <BlackBall /> && squares[c+3] === <BlackBall /> && squares[c+4] === <BlackBall />){
               return squares[c];
             }
         }
@@ -151,7 +152,7 @@ class Board extends React.Component {
       for(let r = 0; r < boardSize; ++r) {
         cols = cols + boardSize;
         for(let c = 0; c < cols-4; ++c) {
-            if(squares[c] === 'B' && squares[c+1] === 'B' && squares[c+2] === 'B' && squares[c+3] === 'B' && squares[c+4] === 'B'){
+            if(squares[c] === <WhiteBall /> && squares[c+1] === <WhiteBall /> && squares[c+2] === <WhiteBall /> && squares[c+3] === <WhiteBall /> && squares[c+4] === <WhiteBall />){
               return squares[c];
             }
         }
@@ -162,7 +163,7 @@ class Board extends React.Component {
       for(let c = 0; c < boardSize; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
-            if(squares[r] === 'P' && squares[r+boardSize] === 'P' && squares[r+(boardSize*2)] === 'P' && squares[r+(boardSize*3)] === 'P' && squares[r+(boardSize*4)] === 'P'){
+            if(squares[r] === <BlackBall /> && squares[r+boardSize] === <BlackBall /> && squares[r+(boardSize*2)] === <BlackBall /> && squares[r+(boardSize*3)] === <BlackBall /> && squares[r+(boardSize*4)] === <BlackBall />){
               return squares[r];
             }
         }
@@ -171,7 +172,7 @@ class Board extends React.Component {
       for(let c = 0; c < boardSize; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
-            if(squares[r] === 'B' && squares[r+boardSize] === 'B' && squares[r+(boardSize*2)] === 'B' && squares[r+(boardSize*3)] === 'B' && squares[r+(boardSize*4)] === 'B'){
+            if(squares[r] === <WhiteBall /> && squares[r+boardSize] === <WhiteBall /> && squares[r+(boardSize*2)] === <WhiteBall /> && squares[r+(boardSize*3)] === <WhiteBall /> && squares[r+(boardSize*4)] === <WhiteBall />){
               return squares[r];
             }
         }
@@ -182,7 +183,7 @@ class Board extends React.Component {
       for(let c = 0; c < boardSize-4; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c; r < rows-(boardSize*4); r=r+19) {
-            if(squares[r] === 'P' && squares[r+(boardSize+1)] === 'P' && squares[r+(boardSize*2)+2] === 'P' && squares[r+(boardSize*3)+3] === 'P' && squares[r+(boardSize*4)+4] === 'P'){
+            if(squares[r] === <BlackBall /> && squares[r+(boardSize+1)] === <BlackBall /> && squares[r+(boardSize*2)+2] === <BlackBall /> && squares[r+(boardSize*3)+3] === <BlackBall /> && squares[r+(boardSize*4)+4] === <BlackBall />){
               return squares[r];
             }
         }
@@ -191,18 +192,19 @@ class Board extends React.Component {
       for(let c = 0; c < boardSize-4; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
-            if(squares[r] === 'B' && squares[r+(boardSize+1)] === 'B' && squares[r+(boardSize*2)+2] === 'B' && squares[r+(boardSize*3)+3] === 'B' && squares[r+(boardSize*4)+4] === 'B'){
+            if(squares[r] === <WhiteBall /> && squares[r+(boardSize+1)] === <WhiteBall /> && squares[r+(boardSize*2)+2] === <WhiteBall /> && squares[r+(boardSize*3)+3] === <WhiteBall /> && squares[r+(boardSize*4)+4] === <WhiteBall />){
               return squares[r];
             }
         }
       }
 
+      console.log(<BlackBall />)
       //negative diagonal
       //for P
       for(let c = 4; c < boardSize; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c+(boardSize*3); r < rows; r=r+boardSize) {
-            if(squares[r] === 'P' && squares[r+(boardSize-1)] === 'P' && squares[r+(boardSize*2)-2] === 'P' && squares[r+(boardSize*3)-3] === 'P' && squares[r+(boardSize*4)-4] === 'P'){
+            if(squares[r] === <BlackBall /> && squares[r+(boardSize-1)] === <BlackBall /> && squares[r+(boardSize*2)-2] === <BlackBall /> && squares[r+(boardSize*3)-3] === <BlackBall /> && squares[r+(boardSize*4)-4] === <BlackBall />){
               return squares[r];
             }
         }
@@ -211,7 +213,7 @@ class Board extends React.Component {
       for(let c = 4; c < boardSize; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c+(boardSize*3); r < rows; r=r+boardSize) {
-            if(squares[r] === 'B' && squares[r+(boardSize-1)] === 'B' && squares[r+(boardSize*2)-2] === 'B' && squares[r+(boardSize*3)-3] === 'B' && squares[r+(boardSize*4)-4] === 'B'){
+            if(squares[r] === <WhiteBall /> && squares[r+(boardSize-1)] === <WhiteBall /> && squares[r+(boardSize*2)-2] === <WhiteBall /> && squares[r+(boardSize*3)-3] === <WhiteBall /> && squares[r+(boardSize*4)-4] === <WhiteBall />){
               return squares[r];
             }
         }
