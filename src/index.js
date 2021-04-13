@@ -55,7 +55,7 @@ class Board extends React.Component {
       super(props);
       this.state = {
         history : [{
-          squares: Array(9).fill(null),
+          squares: Array(361).fill(""),
         }],
         stepNumber: 0,
         xIsNext: true,
@@ -69,7 +69,8 @@ class Board extends React.Component {
       if (calculateWinner(squares, this.state.stepNumber) || squares[i]){
           return;
       }
-      squares[i] = this.state.xIsNext  ? <BlackBall /> : <WhiteBall />;
+      
+      squares[i] = this.state.xIsNext  ?  <BlackBall /> : <WhiteBall />;
       this.setState({
           history: history.concat([{
             squares: squares,
@@ -90,17 +91,6 @@ class Board extends React.Component {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares, this.state.stepNumber);
-
-      const moves = history.map((step, move) => {
-        const desc = move ?
-        'Go to move #' + move :
-        'Go to game start';
-        return(
-          <li key={move}>
-            <button onClick={() => this.jumpTo(move)}>{desc}</button>
-          </li>
-        );
-      });
 
       let status;
       
@@ -129,7 +119,6 @@ class Board extends React.Component {
   }
 
   function calculateWinner(squares, stepNumber) {
-    
     if(stepNumber === 0){
       //if it's the first play, it returns null to continue
       return null;
@@ -139,81 +128,68 @@ class Board extends React.Component {
       let rows = 0;
 
       //horizontal
-      //for P
       for(let r = 0; r < boardSize; ++r) {
         cols = cols + boardSize;
         for(let c = 0; c < cols-4; ++c) {
-            if(squares[c] === <BlackBall /> && squares[c+1] === <BlackBall /> && squares[c+2] === <BlackBall /> && squares[c+3] === <BlackBall /> && squares[c+4] === <BlackBall />){
+            if(Object.is(squares[c].type,BlackBall) && Object.is(squares[c+1].type,BlackBall)  && Object.is(squares[c+2].type,BlackBall)  && Object.is(squares[c+3].type,BlackBall)  && Object.is(squares[c+4].type,BlackBall) ){
+              console.log("ganhou Preto");
               return squares[c];
             }
-        }
-      }
-      //for B
-      for(let r = 0; r < boardSize; ++r) {
-        cols = cols + boardSize;
-        for(let c = 0; c < cols-4; ++c) {
-            if(squares[c] === <WhiteBall /> && squares[c+1] === <WhiteBall /> && squares[c+2] === <WhiteBall /> && squares[c+3] === <WhiteBall /> && squares[c+4] === <WhiteBall />){
+            //branco
+            if(Object.is(squares[c].type,WhiteBall) && Object.is(squares[c+1].type,WhiteBall)  && Object.is(squares[c+2].type,WhiteBall)  && Object.is(squares[c+3].type,WhiteBall)  && Object.is(squares[c+4].type,WhiteBall) ){
+              console.log("ganhou Branco");
               return squares[c];
             }
         }
       }
 
       //vertical
-      //for P
       for(let c = 0; c < boardSize; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
-            if(squares[r] === <BlackBall /> && squares[r+boardSize] === <BlackBall /> && squares[r+(boardSize*2)] === <BlackBall /> && squares[r+(boardSize*3)] === <BlackBall /> && squares[r+(boardSize*4)] === <BlackBall />){
+            if(Object.is(squares[r].type,BlackBall) && Object.is(squares[r+boardSize].type,BlackBall) && Object.is(squares[r+(boardSize*2)].type,BlackBall) && Object.is(squares[r+(boardSize*3)].type,BlackBall) && Object.is(squares[r+(boardSize*4)].type,BlackBall)){
+              console.log("ganhou Preto");
+              return squares[r];
+            }
+            //verifica branco
+            if(Object.is(squares[r].type,WhiteBall) && Object.is(squares[r+boardSize].type,WhiteBall) && Object.is(squares[r+(boardSize*2)].type,WhiteBall) && Object.is(squares[r+(boardSize*3)].type,WhiteBall) && Object.is(squares[r+(boardSize*4)].type,WhiteBall)){
+              console.log("ganhou Branco");
               return squares[r];
             }
         }
       }
-      //for B
-      for(let c = 0; c < boardSize; ++c) {
-        rows = c + ((boardSize-1)*boardSize);
-        for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
-            if(squares[r] === <WhiteBall /> && squares[r+boardSize] === <WhiteBall /> && squares[r+(boardSize*2)] === <WhiteBall /> && squares[r+(boardSize*3)] === <WhiteBall /> && squares[r+(boardSize*4)] === <WhiteBall />){
-              return squares[r];
-            }
-        }
-      }
+      
 
       //positive diagonal
       //for P
       for(let c = 0; c < boardSize-4; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c; r < rows-(boardSize*4); r=r+19) {
-            if(squares[r] === <BlackBall /> && squares[r+(boardSize+1)] === <BlackBall /> && squares[r+(boardSize*2)+2] === <BlackBall /> && squares[r+(boardSize*3)+3] === <BlackBall /> && squares[r+(boardSize*4)+4] === <BlackBall />){
+            if(Object.is(squares[r].type,BlackBall) && Object.is(squares[r+(boardSize+1)].type,BlackBall) && Object.is(squares[r+(boardSize*2)+2].type,BlackBall) && Object.is(squares[r+(boardSize*3)+3].type,BlackBall) && Object.is(squares[r+(boardSize*4)+4].type,BlackBall)){
+              console.log("ganhou Preto");
               return squares[r];
             }
-        }
-      }
-      //for B
-      for(let c = 0; c < boardSize-4; ++c) {
-        rows = c + ((boardSize-1)*boardSize);
-        for(let r = c; r < rows-(boardSize*4); r=r+boardSize) {
-            if(squares[r] === <WhiteBall /> && squares[r+(boardSize+1)] === <WhiteBall /> && squares[r+(boardSize*2)+2] === <WhiteBall /> && squares[r+(boardSize*3)+3] === <WhiteBall /> && squares[r+(boardSize*4)+4] === <WhiteBall />){
+            //verifica branco
+            if(Object.is(squares[r].type,WhiteBall) && Object.is(squares[r+(boardSize+1)].type,WhiteBall) && Object.is(squares[r+(boardSize*2)+2].type,WhiteBall) && Object.is(squares[r+(boardSize*3)+3].type,WhiteBall) && Object.is(squares[r+(boardSize*4)+4].type,WhiteBall)){
+              console.log("ganhou Branco");
               return squares[r];
             }
         }
       }
 
-      console.log(<BlackBall />)
+       
       //negative diagonal
       //for P
       for(let c = 4; c < boardSize; ++c) {
         rows = c + ((boardSize-1)*boardSize);
         for(let r = c+(boardSize*3); r < rows; r=r+boardSize) {
-            if(squares[r] === <BlackBall /> && squares[r+(boardSize-1)] === <BlackBall /> && squares[r+(boardSize*2)-2] === <BlackBall /> && squares[r+(boardSize*3)-3] === <BlackBall /> && squares[r+(boardSize*4)-4] === <BlackBall />){
+            if(Object.is(squares[r].type,BlackBall) && Object.is(squares[r+(boardSize-1)].type,BlackBall) && Object.is(squares[r+(boardSize*2)-2].type,BlackBall) && Object.is(squares[r+(boardSize*3)-3].type,BlackBall) && Object.is(squares[r+(boardSize*4)-4].type,BlackBall)){
+              console.log("ganhou Preto");
               return squares[r];
             }
-        }
-      }
-      //for B
-      for(let c = 4; c < boardSize; ++c) {
-        rows = c + ((boardSize-1)*boardSize);
-        for(let r = c+(boardSize*3); r < rows; r=r+boardSize) {
-            if(squares[r] === <WhiteBall /> && squares[r+(boardSize-1)] === <WhiteBall /> && squares[r+(boardSize*2)-2] === <WhiteBall /> && squares[r+(boardSize*3)-3] === <WhiteBall /> && squares[r+(boardSize*4)-4] === <WhiteBall />){
+            //verifica branco
+            if(Object.is(squares[r].type,WhiteBall) && Object.is(squares[r+(boardSize-1)].type,WhiteBall) && Object.is(squares[r+(boardSize*2)-2].type,WhiteBall) && Object.is(squares[r+(boardSize*3)-3].type,WhiteBall) && Object.is(squares[r+(boardSize*4)-4].type,WhiteBall)){
+              console.log("ganhou Branco");
               return squares[r];
             }
         }
