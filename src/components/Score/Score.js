@@ -6,7 +6,7 @@ function Score({player, points, captures, pieces, status}) {
   // console.log(status);
   return (
     <div className="container">
-      <img src="/Images/RectangleWhite.png" className="img"/>
+      <img src={player==='white' ? process.env.PUBLIC_URL + '/Images/avatarAluno.png' : process.env.PUBLIC_URL + '/Images/avatarTrabalhos.png'}/>
       <div className={player==='white' ? "infoTextWhite" : "infoTextBlack"}>
         <span>{points} Pontos</span>
       </div>

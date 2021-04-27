@@ -43,10 +43,21 @@ ol, ul {
   background: #ddd;
 }
 
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('./Images/background.png');
+  height: 100%; 
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
 .game {
   display: flex;
   flex-direction: row;
-  background-color:#c3c3c3;
   align-items: center;
   justify-content: space-between;
 }
@@ -61,4 +72,8 @@ ol, ul {
   border-radius: 10px;
   margin:10px 0;
   border: 3px solid #b97f45;
+}
+
+.root{
+  
 }
