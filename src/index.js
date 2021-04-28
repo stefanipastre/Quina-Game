@@ -93,6 +93,9 @@ class Board extends React.Component {
       const winner = calculateWinner(current.squares, this.state.stepNumber);
 
       let status;
+      let piecesBlack = 0;
+      let piecesWhite = 0;
+      
       
       if(winner) {
         status = 'Winner: ' + winner;
@@ -104,14 +107,14 @@ class Board extends React.Component {
         <>
         <Title title="ESTUDANTE VS TRABALHOS"/>
         <div className="game">
-          <Score player="white" points="04" captures="05" pieces="06" status={status}/>
+          <Score player="white" points="0" captures="05" pieces={piecesWhite, piecesBlack} status={status}/>
           <div className="game-board">
             <Board
               squares={current.squares}
               onClick={(i) => this.handleClick(i)} 
             />
           </div>
-            <Score player="black" points="01" captures="02" pieces="03" status={status}/>
+            <Score player="black" points="01" captures="02" pieces={piecesBlack, piecesWhite} status={status}/>
         </div>
         </>
       );
