@@ -6,7 +6,6 @@ import WhiteBall from './components/Balls/WhiteBall/WhiteBall';
 import Score from './components/Score/Score'
 import Title from './components/Title/Title'
 
-
 function Square(props){
       return (
         <button className="square" 
@@ -93,10 +92,7 @@ class Board extends React.Component {
       const winner = calculateWinner(current.squares, this.state.stepNumber);
 
       let status;
-      let piecesBlack = 0;
-      let piecesWhite = 0;
-      
-      
+
       if(winner) {
         status = 'Winner: ' + winner;
       }else{
@@ -107,14 +103,14 @@ class Board extends React.Component {
         <>
         <Title title="ESTUDANTE VS TRABALHOS"/>
         <div className="game">
-          <Score player="white" points="0" captures="05" pieces={piecesWhite, piecesBlack} status={status}/>
+          <Score player="white" points="0" captures="05"  status={status}/>
           <div className="game-board">
             <Board
               squares={current.squares}
               onClick={(i) => this.handleClick(i)} 
             />
           </div>
-            <Score player="black" points="01" captures="02" pieces={piecesBlack, piecesWhite} status={status}/>
+            <Score player="black" points="01" captures="02"  status={status}/>
         </div>
         </>
       );
