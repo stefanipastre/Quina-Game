@@ -1,0 +1,22 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+  }
+  
+  ol, ul {
+    padding-left: 30px;
+  }
+  
+  body, html {
+    height: 80%;
+    margin: 0;
+    background-image: url('./Images/final1.png');
+    height: 50%; 
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  
